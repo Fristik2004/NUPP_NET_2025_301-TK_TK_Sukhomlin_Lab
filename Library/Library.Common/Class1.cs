@@ -1,12 +1,22 @@
 ﻿using Library.Common;
+using System;
 
 namespace Library.Common
 {
+    public enum LibraryItemType
+    {
+        Book,
+        Magazine,
+        Other
+    }
+
     public abstract class LibraryItem
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
+
+        public LibraryItemType ItemType { get; set; }  // ➕ Додане поле
 
         // Абстрактний метод
         public abstract void DisplayInfo();
@@ -21,6 +31,19 @@ namespace Library.Common
         public Book()
         {
             Id = Guid.NewGuid();
+            ItemType = LibraryItemType.Book;
+        }
+
+        // Статичний метод
+        public static Book CreateSampleBook()
+        {
+            return new Book
+            {
+                Title = "The Pragmatic Programmer",
+                Author = "Andrew Hunt, David Thomas",
+                Pages = 352,
+                Year = 1999
+            };
         }
 
         public override void DisplayInfo()
@@ -33,6 +56,13 @@ namespace Library.Common
     {
         public int Issue { get; set; }
         public string Publisher { get; set; }
+
+        // ➕ Конструктор
+        public Magazine()
+        {
+            Id = Guid.NewGuid();
+            ItemType = LibraryItemType.Magazine;
+        }
 
         public override void DisplayInfo()
         {
