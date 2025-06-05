@@ -1,6 +1,9 @@
 using Devices.Infrastructure.Contracts;
 using Devices.Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Zoo.Rest;
 
 namespace Devices.Rest.Controllers;
 
@@ -51,6 +54,7 @@ public class LaptopController : Controller
         }
     }
     
+    [Authorize(Roles = Roles.Admin)]
     [HttpPost]
     public async Task<IResult> Create(
         [FromBody] Laptop value,
@@ -75,6 +79,7 @@ public class LaptopController : Controller
         }
     }
     
+    [Authorize(Roles = Roles.Admin)]
     [HttpPatch("{id:guid}")]
     public async Task<IResult> Update(
         [FromRoute] Guid id,
@@ -102,6 +107,7 @@ public class LaptopController : Controller
         }
     }
 
+    [Authorize(Roles = Roles.Admin)]
     [HttpDelete("{id:guid}")]
     public async Task<IResult> Delete(
         [FromRoute] Guid id,
@@ -129,5 +135,21 @@ public class LaptopController : Controller
                 statusCode: StatusCodes.Status500InternalServerError
             );
         }
+    }
+    
+    [Authorize]
+    [HttpPost("/role/{role}")]
+    public async Task<IResult> Grant(
+        [FromRoute] string role,
+        [FromServices] UserManager<IdentityUser> userManager)
+    {
+        var user = await userManager.GetUserAsync(User);
+        if (!await userManager.IsInRoleAsync(user, role))
+        {
+            await userManager.AddToRoleAsync(user, role);
+            return Results.Ok();
+        }
+            
+        return Results.BadRequest();
     }
 }

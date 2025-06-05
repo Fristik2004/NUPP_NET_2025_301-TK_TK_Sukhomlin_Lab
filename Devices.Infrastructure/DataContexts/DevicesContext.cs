@@ -1,9 +1,10 @@
 using Devices.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Devices.Infrastructure.DataContexts;
 
-public class DevicesContext : DbContext
+public class DevicesContext : IdentityDbContext
 {
     public DevicesContext(DbContextOptions<DevicesContext> options) : base(options)
     {

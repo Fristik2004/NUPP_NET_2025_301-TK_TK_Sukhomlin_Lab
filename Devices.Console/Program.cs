@@ -15,12 +15,12 @@ builder.Configuration
     .AddEnvironmentVariables()
     .AddCommandLine(args);
 
-//var connection = builder.Configuration.GetConnectionString("SqlServerConnection")!;
-var connection = builder.Configuration.GetConnectionString("MongoDbConnection")!;
+var connection = builder.Configuration.GetConnectionString("SqlServerConnection")!;
+//var connection = builder.Configuration.GetConnectionString("MongoDbConnection")!;
 
 builder.Services.AddDbContext<DevicesContext>(x => x
-    //.UseSqlServer(connection)
-    .UseMongoDB(connection, "Devices")
+    .UseSqlServer(connection)
+    //.UseMongoDB(connection, "Devices")
 );
 
 builder.Services.AddScoped<IRepository<Charger>, Repository<Charger>>();
