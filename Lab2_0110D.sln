@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devices.Infrastructure", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devices.Console", "Devices.Console\Devices.Console.csproj", "{38E735F5-7BFB-4059-83A3-6D5F37555055}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devices.Rest", "Devices.Rest\Devices.Rest.csproj", "{A8469FBF-FAC3-4C9D-9468-E916A6992393}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devices.Web", "Devices.Web\Devices.Web.csproj", "{E5617668-75B0-426E-ABC0-90AB6537F525}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{38E735F5-7BFB-4059-83A3-6D5F37555055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38E735F5-7BFB-4059-83A3-6D5F37555055}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38E735F5-7BFB-4059-83A3-6D5F37555055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8469FBF-FAC3-4C9D-9468-E916A6992393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8469FBF-FAC3-4C9D-9468-E916A6992393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8469FBF-FAC3-4C9D-9468-E916A6992393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8469FBF-FAC3-4C9D-9468-E916A6992393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5617668-75B0-426E-ABC0-90AB6537F525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5617668-75B0-426E-ABC0-90AB6537F525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5617668-75B0-426E-ABC0-90AB6537F525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5617668-75B0-426E-ABC0-90AB6537F525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
