@@ -1,0 +1,158 @@
+﻿@page "/"
+@using System.Net
+@using Devices.Infrastructure.Models
+
+@inject HttpClient Client
+
+<InputText @bind-Value="Id" DisplayName="Id"></InputText>
+
+<InputText @bind-Value="Name" DisplayName="Name"></InputText>
+<InputNumber @bind-Value="Price" DisplayName="Price"></InputNumber>
+<InputText @bind-Value="Processor" DisplayName="Processor"></InputText>
+
+
+<p>@Status</p>
+
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Processor</td>
+    </tr>
+    @foreach (var value in Laptops)
+    {
+        <tr>
+            <td>@value.Id</td>
+            <td>@value.Name</td>
+            <td>@value.Price</td>
+            <td>@value.Processor</td>
+        </tr>
+    }
+</table>
+
+<button @onclick="Create">Create</button>
+<button @onclick="Update">Update</button>
+<button @onclick="Delete">Delete</button>
+<button @onclick="Find">Find</button>
+<button @onclick="FindAll">Find All</button>
+
+@code {
+
+    public string Id { get; set; } = string.Empty;
+    
+    public string Name { get; set; }
+    
+    public double Price { get; set; }
+    
+    public string Processor { get; set; }
+    
+    public HttpStatusCode Status { get; set; }
+
+    public List<Laptop> Laptops { get; set; } = new();
+
+    private const string PATH = "/laptops";
+    
+    private object CreateRequest()
+    {
+        return new
+        {
+            Name,
+            Price,
+            Processor
+        };
+    }
+    
+    public async Task Create()
+    {
+        try
+        {
+            var response = await Client.PostAsJsonAsync(PATH, CreateRequest());
+
+            Status = response.StatusCode;
+        
+            if (response.IsSuccessStatusCode is false)
+                return;
+        
+            Laptops = [(await response.Content.ReadFromJsonAsync<Laptop>())!];
+        }
+        catch (Exception exception)
+        {
+            Status = HttpStatusCode.BadRequest;
+        }
+    }
+    
+    public async Task Update()
+    {
+        try
+        {
+            var response = await Client.PatchAsJsonAsync($"{PATH}/{Guid.Parse(Id)}", CreateRequest());
+
+            Status = response.StatusCode;
+        
+            if (response.IsSuccessStatusCode is false)
+                return;
+        
+            Laptops = [(await response.Content.ReadFromJsonAsync<Laptop>())!];
+        }
+        catch (Exception exception)
+        {
+            Status = HttpStatusCode.BadRequest;
+        }
+    }
+
+    public async Task Delete()
+    {
+        try
+        {
+            var response = await Client.DeleteAsync($"{PATH}/{Guid.Parse(Id)}");
+
+            Status = response.StatusCode;
+            
+            if (response.IsSuccessStatusCode)
+                Laptops.Clear();
+        }
+        catch (Exception exception)
+        {
+            Status = HttpStatusCode.BadRequest;
+        }
+    }
+    
+    public async Task Find()
+    {
+        try
+        {
+            var response = await Client.GetAsync($"{PATH}/{Guid.Parse(Id)}");
+
+            Status = response.StatusCode;
+            
+            if (response.IsSuccessStatusCode is false)
+                return;
+
+            Laptops = [(await response.Content.ReadFromJsonAsync<Laptop>())!];
+        }
+        catch (Exception exception)
+        {
+            Status = HttpStatusCode.BadRequest;
+        }
+    }
+    
+    public async Task FindAll()
+    {
+        try
+        {
+            var response = await Client.GetAsync(PATH);
+
+            Status = response.StatusCode;
+            
+            if (response.IsSuccessStatusCode is false)
+                return;
+
+            Laptops = (await response.Content.ReadFromJsonAsync<List<Laptop>>())!;
+        }
+        catch (Exception exception)
+        {
+            Status = HttpStatusCode.BadRequest;
+        }
+    }
+}
